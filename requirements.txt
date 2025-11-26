@@ -1,0 +1,25 @@
+# Configuration & Utilities
+python-dotenv
+pydantic
+pydantic-settings
+
+# Core Dependencies
+langchain
+langchain-core
+langchain-community
+langgraph
+
+# LLM Providers (Multi-Model Support)
+langchain-openai
+langchain-google-genai
+langchain-anthropic
+
+# Search & Web Tools
+tavily-python
+beautifulsoup4
+lxml
+requests
+httpx
+
+# Optional: Rate limiting
+tenacity
