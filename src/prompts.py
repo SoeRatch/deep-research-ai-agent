@@ -198,67 +198,68 @@ class ResearchPrompts:
         Returns:
             Planning prompt with entity-type detection and few-shot examples
         """
+        # 1. DETECT ENTITY TYPE
         entity_type = ResearchPrompts._detect_entity_type(entity)
+        # Returns: "tech_executive", "political_figure", "company", etc.
+
+        # 2. GET FEW-SHOT EXAMPLES (based on entity type) - Shows LLM good vs bad queries
         few_shot_examples = ResearchPrompts._get_few_shot_query_examples(entity_type)
+        # Returns entity-specific query examples
+
+        # 3. GET SOURCE STRATEGIES - Tells LLM where to look
         source_strategies = ResearchPrompts._get_source_specific_strategies()
+        # Returns tips on which sources to target
         
         return f"""
-            You are an expert research strategist conducting a DEEP, COMPREHENSIVE investigation on: {entity}
+        You are an expert research strategist conducting a DEEP, COMPREHENSIVE investigation on: {entity}
 
-            ENTITY TYPE DETECTED: {entity_type}
-            {f"ADDITIONAL CONTEXT: {context}" if context else ""}
+        ENTITY TYPE DETECTED: {entity_type}
+        {f"ADDITIONAL CONTEXT: {context}" if context else ""}
 
-            === MISSION ===
-            Uncover HIDDEN, LESSER-KNOWN facts that require investigative depth, not just surface-level information.
+        === MISSION ===
+        Uncover HIDDEN, LESSER-KNOWN facts through investigative research, not just surface-level information.
 
-            TARGET CATEGORIES:
-            1. Biographical & Professional Background (education, early career, current roles)
-            2. Financial Connections (investments, business interests, wealth sources)
-            3. HIDDEN FACTS (brief roles, family connections, unlisted ventures)
-            4. Risk Factors (controversies, lawsuits, regulatory issues)
-            5. Network of Related Entities (people and organizations to investigate further)
+        YOUR TASK: Create an initial research strategy with foundational queries.
 
-            === STRATEGIC APPROACH ===
+        FOCUS AREAS:
+        1. Biographical & Professional Background (education, key roles, career path)
+        2. Financial Connections (investments, business interests, board positions)
+        3. Hidden Facts & Connections (family, unlisted ventures, controversies)
+        4. Risk Factors (lawsuits, regulatory issues, conflicts of interest)
+        5. Related Entities (people and organizations worth investigating)
 
-            1. DEPTH LAYERS (Progress from obvious to hidden):
-            • Layer 1: Overview (Wikipedia, LinkedIn, news)
-            • Layer 2: Professional connections (SEC, boards, investments)
-            • Layer 3: HIDDEN FACTS (family, brief roles, unlisted ventures, early career)
-            • Layer 4: Second-order entities (investigate discovered people/orgs)
+        === QUERY STRATEGY ===
 
-            2. QUERY FORMULATION:
-            • Generate 6-8 queries across layers (1-2 broad, 4-6 investigative)
-            • Use specific names, dates, organizations (not "[entity] information")
-            • Target multiple source types (news, SEC, court records, LinkedIn)
-            • Identify entities to investigate in subsequent rounds
+        Generate 3 specific, investigative queries:
+        
+        • Query 1: OVERVIEW - Establish biographical baseline and current role
+        • Query 2-3: INVESTIGATIVE - Target specific aspects (investments, connections, roles)
+        
+        RULES:
+        ✓ Use specific names, dates, organizations (not generic "[entity] information")
+        ✓ Target authoritative sources (LinkedIn, news, SEC filings, official bios)
+        ✓ Each query should be actionable and specific
+        ✗ Avoid vague or overly broad queries
 
-            3. CRITICAL RULES:
-            ✓ Mix broad (Layer 1) with specific investigative queries (Layer 2-3)
-            ✓ Use entity-specific terminology, anticipate follow-up entities
-            ✗ AVOID generic queries or only surface-level searches
+        {few_shot_examples}
 
-            {few_shot_examples}
+        {source_strategies}
 
-            {source_strategies}
+        === OUTPUT FORMAT (JSON) ===
 
-            === OUTPUT FORMAT (JSON) ===
+        {{
+        "entity_type": "{entity_type}",
+        "strategy": "High-level approach (2-3 sentences)",
+        "initial_queries": [
+            "Layer 1: Overview query",
+            "Layer 2-3: Specific investigative query 1",
+            "Layer 2-3: Specific investigative query 2"
+        ],
+        "information_gaps": ["Expected gaps needing deeper investigation"]
+        }}
 
-            {{
-            "entity_type": "{entity_type}",
-            "strategy": "High-level approach (2-3 sentences)",
-            "initial_queries": [
-                "Layer 1: Overview query",
-                "Layer 2: Financial/board query",
-                "Layer 3: Family/hidden facts query",
-                "Layer 3: Early career/controversy query"
-            ],
-            "information_gaps": ["Expected gaps needing deeper investigation"],
-            "risk_hypotheses": ["Potential concerns based on entity type"],
-            "expected_entities_to_discover": ["People/orgs likely mentioned"]
-            }}
-
-            Provide valid JSON only. Make queries SPECIFIC and INVESTIGATIVE!
-            """   
+        Provide valid JSON only. Make queries SPECIFIC and INVESTIGATIVE!
+        """
 
 
     @staticmethod
