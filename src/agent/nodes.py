@@ -72,25 +72,38 @@ class ResearchNodes:
         """
         logger.info(f"Planning research for: {state['entity']}")
         
+        # 1. Generate the planning prompt
         prompt = self.prompts.get_planner_prompt(state['entity'])
         
+        # 2. Send prompt to LLM
         response = await self.orchestrator.invoke_with_fallback(
             ModelRole.PLANNER,
             [{'role': 'user', 'content': prompt}]
         )
         
+        # 3. Parse the JSON response from LLM
         plan = self._parse_json_response(response)
         
+        # 4. Use LLM's entity_type detection (might be more accurate than heuristic)
+        entity_type = plan.get('entity_type', state.get('entity_type', 'individual'))
+
+        # 5. Update state: entity_type, initial queries, information gaps, increment depth
         updates = {
+            'entity_type': entity_type,
             'next_queries': plan.get('initial_queries', []),
             'information_gaps': plan.get('information_gaps', []),
             'research_depth': state['research_depth'] + 1
         }
         
-        updates.update(self._log_audit(state, 'plan', {
-            'strategy': plan.get('strategy', ''),
-            'initial_queries': plan.get('initial_queries', [])
-        }))
+        # 6. Log to audit trail
+        updates.update(
+            self._log_audit(state, 'plan',{
+                'entity_type': entity_type,
+                'strategy': plan.get('strategy', ''),
+                'initial_queries': plan.get('initial_queries', [])
+                }
+                )
+            )
         
         return updates
     
@@ -150,6 +163,7 @@ class ResearchNodes:
                     all_results[result_index]['content_source'] = 'tavily'
         
         # Mark Tavily results
+        # Tags results that already had Tavily content as 'tavily'
         for result in all_results:
             if result.get('type') == 'search_result' and 'content_source' not in result:
                 result['content_source'] = 'tavily'
@@ -157,10 +171,10 @@ class ResearchNodes:
         logger.info(f"Search complete: {len(all_results)} results ({len(all_results) - scraped_count} from Tavily, {scraped_count} scraped)")
         
         updates = {
-            'queries_executed': queries,
-            'search_results': all_results,
-            'sources': all_sources,
-            'next_queries': []  # Clear queue
+            'queries_executed': queries,        # Track what queries ran
+            'search_results': all_results,      # All search results with content
+            'sources': all_sources,             # All source URLs
+            'next_queries': []                  # Clear queue (important!)
         }
         
         updates.update(self._log_audit(state, 'search', {
