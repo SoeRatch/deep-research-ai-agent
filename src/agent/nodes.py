@@ -186,7 +186,7 @@ class ResearchNodes:
         
         return updates
     
-    
+
     async def extract_node(self, state: ResearchState) -> Dict[str, Any]:
         """
         Extract facts AND entities from search results.
@@ -353,6 +353,8 @@ class ResearchNodes:
         risks = risk_analysis.get('risks', [])
         
         # Connection mapping
+        # Identify all connections mentioned in the facts and structure them as relationships
+        # This appears in the report as a visual network map!
         connection_prompt = self.prompts.get_connection_mapping_prompt(state['entity'], facts_str)
         connection_response = await self.orchestrator.invoke_with_fallback(
             ModelRole.ANALYZER,
@@ -461,11 +463,29 @@ class ResearchNodes:
         # Increment iteration counter
         iteration_count = state['iteration_count'] + 1
         
+        # Check for uninvestigated HIGH priority entities
+        # This ensures we don't stop early if we found important leads (like family/co-founders)
+        # even if we are confident about the main facts.
+        uninvestigated_high_priority = [
+            e for e in state['entities_to_investigate']
+            if e.get('priority') == 'high' 
+            and e['name'] not in state['investigated_entities']
+            and e['name'] not in entities_investigated_this_round
+        ]
+        
+        has_important_leads = len(uninvestigated_high_priority) > 0
+        
+        if has_important_leads:
+            logger.info(f"Continuing research due to {len(uninvestigated_high_priority)} uninvestigated high-priority leads")
+        
         # Check if should continue
         should_continue = (
             iteration_count < state['max_depth'] and
             len(new_queries) > 0 and
-            state['overall_confidence'] < self.config.confidence_threshold
+            (
+                state['overall_confidence'] < self.config.confidence_threshold or
+                has_important_leads  # Force continue for high-value targets
+            )
         )
         
         updates = {

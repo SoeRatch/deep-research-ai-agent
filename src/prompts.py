@@ -418,7 +418,8 @@ class ResearchPrompts:
         "connections": [
             {{
             "target_entity": "Name of connected person/org",
-            "relationship_type": "employment|investment|personal|advisory|ownership|partnership"
+            "relationship_type": "employment|investment|personal|advisory|ownership|partnership",
+            "description": "Specific nature of connection"
             }}
         ]
         }}
@@ -562,8 +563,7 @@ class ResearchPrompts:
         ],
         "entities_to_investigate_this_round": [
             "List of entity names you're targeting in these queries"
-        ],
-        "expected_findings": "What these queries should reveal about entities and gaps"
+        ]
         }}
 
         Generate 5-7 queries. Prioritize ENTITY INVESTIGATION for hidden fact discovery!
@@ -591,7 +591,7 @@ class ResearchPrompts:
             Synthesis prompt
         """
         facts_str = "\n".join(f"- {f.get('claim', str(f))}" for f in facts[:50])
-        connections_str = "\n".join(f"- {c.get('target_entity', '')}: {c.get('description', '')}" for c in connections[:20])
+        connections_str = "\n".join(f"- {c.get('target_entity', '')} ({c.get('relationship_type', '')}): {c.get('description', '')}" for c in connections[:20])
         risks_str = "\n".join(f"- [{r.get('severity', 'unknown')}] {r.get('description', '')}" for r in risks[:20])
         
         return f"""

@@ -40,6 +40,19 @@ python evaluate_results.py "Sam Altman" test_results/sam_altman/*_state_*.json
 - Level 1 vs Level 2 performance
 - Agent statistics (queries, iterations, confidence)
 
+### Evaluate results of all test cases
+
+```bash
+# Test Case 1
+python evaluate_results.py "Sam Altman" test_results/sam_altman/*_state_*.json
+
+# Test Case 2
+python evaluate_results.py "Sheryl Sandberg" test_results/sheryl_sandberg/*_state_*.json
+
+# Test Case 3
+python evaluate_results.py "Marc Andreessen" test_results/marc_andreessen/*_state_*.json
+```
+
 ---
 
 ## Generated Files
