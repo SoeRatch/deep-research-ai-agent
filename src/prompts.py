@@ -284,9 +284,9 @@ class ResearchPrompts:
         {content[:3000]}  # Truncate to avoid token limits
 
         Extract all relevant facts in structured format. For each fact:
-        1. Identify the specific claim
+        1. Identify the specific claim (include dates, names, values in the claim text)
         2. Assess confidence based on source quality and corroboration
-        3. Note any dates, names, or specific details
+        3. Categorize appropriately
 
         FACT CATEGORIES:
         - Biographical (education, age, location, family)
@@ -307,14 +307,8 @@ class ResearchPrompts:
         "facts": [
             {{
             "category": "biographical|professional|financial|relationships|events|patterns",
-            "claim": "Specific factual claim",
-            "confidence": 0.0-1.0,
-            "details": {{
-                "date": "YYYY-MM-DD if known",
-                "related_entities": ["Names of related people/orgs"],
-                "specific_values": "Numbers, amounts, etc."
-            }},
-            "is_hidden": true/false  # True if this is lesser-known information
+            "claim": "Specific factual claim with dates and details included",
+            "confidence": 0.0-1.0
             }}
         ],
         "key_entities_mentioned": [
@@ -327,9 +321,9 @@ class ResearchPrompts:
         }}
 
         EXAMPLES:
-        - "Jack Altman" (brother, CEO) → {{"name": "Jack Altman", "priority": "high", "relationship": "brother, business associate"}}
-        - "Stripe" (minor investment) → {{"name": "Stripe", "priority": "medium", "relationship": "portfolio company"}}
-        - "mentioned at conference" → {{"name": "...", "priority": "low", "relationship": "casual mention"}}
+        - "Jack Altman" (brother, CEO) - {{"name": "Jack Altman", "priority": "high", "relationship": "brother, business associate"}}
+        - "Stripe" (minor investment) - {{"name": "Stripe", "priority": "medium", "relationship": "portfolio company"}}
+        - "mentioned at conference" - {{"name": "...", "priority": "low", "relationship": "casual mention"}}
 
         Provide your response as valid JSON only.
         """
