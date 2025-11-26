@@ -69,7 +69,9 @@ async def run_research(
         
         # Run the agent
         logger.info("Starting agent workflow...")
-        final_state = await graph.ainvoke(initial_state)
+        # Increase recursion limit to allow for deep research (depth * nodes_per_iteration)
+        # 5 iterations * 5 nodes = 25 steps + 1(planning step) = 26 steps, so default 25 is too low.
+        final_state = await graph.ainvoke(initial_state, {"recursion_limit": 100})
         
         logger.info("Research workflow completed")
         logger.info(f"Total facts discovered: {len(final_state['facts_discovered'])}")
