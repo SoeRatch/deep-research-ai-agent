@@ -100,25 +100,6 @@ Test the Deep Research AI Agent's ability to:
 
 ---
 
-## Usage
-
-### Run Test
-```bash
-# Test on Sam Altman
-./demo.sh "Sam Altman"
-
-# Test on Sheryl Sandberg
-./demo.sh "Sheryl Sandberg"
-
-# Test on Marc Andreessen
-./demo.sh "Marc Andreessen"
-```
-
-### Evaluate Results
-```bash
-python evaluate_results.py "Sam Altman" test_results/sam_altman/*_state_*.json
-```
-
 ### Expected Behavior
 - Initial queries: "Sam Altman CEO OpenAI biography"
 - Refined queries: "Sam Altman investments Helion Energy"
