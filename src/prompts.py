@@ -376,13 +376,9 @@ class ResearchPrompts:
             "category": "legal|financial|ethical|reputational|operational|associational",
             "description": "Specific risk or red flag",
             "severity": "low|medium|high",
-            "confidence": 0.0-1.0,
-            "supporting_facts": ["Fact 1", "Fact 2"],
-            "requires_verification": true/false
+            "confidence": 0.0-1.0
             }}
-        ],
-        "overall_risk_score": 0.0-1.0,
-        "summary": "Brief risk assessment summary"
+        ]
         }}
 
         Provide your response as valid JSON only.
@@ -422,14 +418,9 @@ class ResearchPrompts:
         "connections": [
             {{
             "target_entity": "Name of connected person/org",
-            "relationship_type": "employment|investment|personal|advisory|ownership|partnership",
-            "description": "Specific nature of connection",
-            "time_period": "YYYY-YYYY or current",
-            "confidence": 0.0-1.0,
-            "significance": "low|medium|high"
+            "relationship_type": "employment|investment|personal|advisory|ownership|partnership"
             }}
-        ],
-        "network_summary": "Overview of connection patterns"
+        ]
         }}
 
         Provide your response as valid JSON only.
