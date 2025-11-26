@@ -24,6 +24,24 @@ This Deep Research AI Agent is an autonomous system designed for **comprehensive
 
 ---
 
+## 📋 Table of Contents
+
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Setup](#setup)
+- [Usage](#usage)
+- [Test Cases](#test-cases)
+- [Evaluating Results](#evaluating-results)
+- [Output Files](#output-files)
+- [Features Deep Dive](#features-deep-dive)
+- [Prompt Engineering](#prompt-engineering)
+- [Configuration](#configuration)
+- [Project Structure](#project-structure)
+- [Known Limitations](#known-limitations)
+- [Future Enhancements](#future-enhancements)
+
+---
+
 ## Architecture
 
 ### System Design
@@ -95,17 +113,29 @@ The agent uses **LangGraph** for orchestration with the following nodes:
    cd deep_research_copy_test
    ```
 
-2. **Install dependencies:**
+2. **Create and activate virtual environment:**
+   ```bash
+   # Create virtual environment
+   python -m venv venv
+
+   # Activate (macOS/Linux)
+   source venv/bin/activate
+   
+   # Activate (Windows)
+   venv\Scripts\activate
+   ```
+
+3. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Configure environment variables:**
+4. **Configure environment variables:**
    ```bash
    cp .env.example .env
    ```
 
-4. **Edit `.env` with your API keys:**
+5. **Edit `.env` with your API keys:**
    ```bash
    # Required: Choose at least 2 providers
    OPENAI_API_KEY=sk-...
