@@ -2,5 +2,14 @@
 venv/
 __pycache__/
 .DS_Store
-research_agent.log
+
+# Research outputs (generated files)
 reports/
+test_results/
+live_demo/
+demo_output/
+investigations/
+
+# Logs
+*.log
+research_agent.log
