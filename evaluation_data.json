@@ -1,0 +1,64 @@
+{
+    "personas": {
+        "Sam Altman": {
+            "type": "tech_executive",
+            "description": "CEO of OpenAI, former Y Combinator president",
+            "level_1_facts": [
+                "Y Combinator president 2014-2019",
+                "Loopt founder sold to Green Dot Corporation 2012",
+                "CEO of OpenAI since 2019"
+            ],
+            "level_2_facts": [
+                "Invested in Helion Energy nuclear fusion company",
+                "Brother Jack Altman CEO of Lattice HR software",
+                "Early investor in Reddit and Airbnb",
+                "Property ownership San Francisco real estate",
+                "Briefly fired from OpenAI board November 2023"
+            ]
+        },
+        "Sheryl Sandberg": {
+            "type": "tech_executive",
+            "description": "Former Meta COO, author of Lean In",
+            "level_1_facts": [
+                "Meta COO 2008-2022",
+                "Google Vice President Sales and Operations 2001-2008",
+                "Chief of Staff for Treasury Secretary Lawrence Summers"
+            ],
+            "level_2_facts": [
+                "Husband Dave Goldberg died suddenly 2015",
+                "Board member of Walt Disney Company",
+                "SurveyMonkey CEO Dave Goldberg connection",
+                "Criticized for Facebook's role in 2016 election",
+                "Lean In Foundation nonprofit organization founder"
+            ]
+        },
+        "Marc Andreessen": {
+            "type": "tech_investor",
+            "description": "Co-founder of Andreessen Horowitz, Netscape creator",
+            "level_1_facts": [
+                "Co-founded Andreessen Horowitz venture capital 2009",
+                "Created Mosaic web browser 1993",
+                "Netscape co-founder 1994"
+            ],
+            "level_2_facts": [
+                "Board member of Meta/Facebook since 2008",
+                "Early Bitcoin and cryptocurrency advocate",
+                "Invested in Coinbase, Ripple crypto companies",
+                "Wife Laura Arrillaga-Andreessen Stanford philanthropist",
+                "Controversial tweets on various political topics"
+            ]
+        }
+    },
+    "evaluation_criteria": {
+        "discovery_rate_target": 0.70,
+        "level_1_target": 0.80,
+        "level_2_target": 0.60,
+        "keyword_overlap_threshold": 0.50
+    },
+    "notes": {
+        "purpose": "Real public figures with verifiable online information",
+        "level_1": "Facts findable with 2-3 direct searches",
+        "level_2": "Hidden connections requiring consecutive searches and relationship investigation",
+        "usage": "Run agent on these real people to validate discovery capability"
+    }
+}
