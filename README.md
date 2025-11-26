@@ -460,7 +460,6 @@ deep_research_copy_test/
 1. **Validation:** Currently uses keyword overlap; semantic similarity would be better
 2. **Rate Limiting:** Configured but not actively enforced (relies on API limits)
 3. **Caching:** No persistent cache between runs
-4. **Personas:** Test personas are fictional for demonstration purposes
 
 ---
 
@@ -501,7 +500,7 @@ MIT License - See LICENSE file for details
 ## 📞 Support
 
 For questions about this implementation:
-- Review [`test_personas.md`](test_personas.md) for evaluation methodology
+- Review [`TEST_CASES.md`](TEST_CASES.md) for evaluation methodology
 - Check [`PROMPT_ENGINEERING.md`](PROMPT_ENGINEERING.md) for prompt design decisions
 - See audit logs for debugging failed searches
 
