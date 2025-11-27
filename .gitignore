@@ -5,7 +5,7 @@ __pycache__/
 
 # Research outputs (generated files)
 reports/
-test_results/
+# test_results/
 live_demo/
 demo_output/
 investigations/

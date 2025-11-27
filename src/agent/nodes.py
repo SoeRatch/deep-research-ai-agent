@@ -336,10 +336,10 @@ class ResearchNodes:
         """
         logger.info("Analyzing facts for risks and connections")
         
-        # Format facts for analysis
+        # Format facts for analysis (use recent facts to avoid timeout issues)
         facts_str = "\n".join([
             f"- [{f.get('category', 'unknown')}] {f.get('claim', '')} (confidence: {f.get('confidence', 0):.2f})"
-            for f in state['facts_discovered'][-50:]  # Last 50 facts
+            for f in state['facts_discovered'][-20:]  # Last 20 facts (prevents API timeout)
         ])
         
         # Risk analysis
